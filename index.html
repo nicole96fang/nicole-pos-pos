@@ -1,197 +1,154 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#eaf7fb">
-<title>GOH YEAN HUAN POS</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#edf8fb"><title>GOH YEAN HUAN POS</title>
 <style>
-@font-face{
-  font-family:"NeedMoodNiuNiu";
-  src:url("./NeedMoodNiuNiu.ttf") format("truetype");
-  font-display:swap;
-}
-:root{
- --blue:#dff3fa;--paper:#fffdfb;--ink:#425b69;--muted:#8499a4;
- --pink:#f8e8ef;--mint:#e6f5ee;--line:#d9eaf0;--accent:#62b3d0;
- --red:#d77c87;--green:#5a9d83;--shadow:0 10px 28px rgba(90,130,145,.10);
-}
-*{box-sizing:border-box}
-body{margin:0;background:linear-gradient(135deg,#edf8fb,#fbf5f8 60%,#f2faf5);color:var(--ink);
- font:15px "NeedMoodNiuNiu",ui-rounded,"Arial Rounded MT Bold",system-ui,sans-serif;min-height:100vh}
-button,input,select,textarea{font:inherit;color:inherit}
-button{cursor:pointer;border:0}
-.app{max-width:1320px;margin:auto;padding:20px}
-header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
-.brand{display:flex;align-items:center;gap:12px}
-.logo{font-size:34px;width:58px;height:58px;border-radius:20px;background:#fff;display:grid;place-items:center;box-shadow:var(--shadow)}
-h1{font-size:22px;margin:0;letter-spacing:.3px} .sub{font-size:12px;color:var(--muted);margin-top:4px}
-.topdate{background:#fff;border:1px solid var(--line);border-radius:15px;padding:10px 14px;color:var(--muted);font-size:13px}
-.layout{display:grid;grid-template-columns:210px 1fr;gap:18px}
-nav{background:rgba(255,255,255,.8);border:1px solid var(--line);border-radius:24px;padding:12px;height:max-content;position:sticky;top:12px;box-shadow:var(--shadow)}
-nav button{width:100%;text-align:left;background:transparent;padding:13px 14px;border-radius:14px;margin:3px 0;color:#718792}
-nav button.active,nav button:hover{background:var(--blue);color:#315c70}
-main{min-width:0}
-.page{display:none}.page.active{display:block}
-.pagehead{display:flex;justify-content:space-between;align-items:center;margin:2px 0 16px;gap:12px}
-h2{font-size:21px;margin:0} .hint{font-size:12px;color:var(--muted);margin-top:4px}
-.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-.card{background:rgba(255,255,255,.88);border:1px solid var(--line);border-radius:20px;padding:17px;box-shadow:var(--shadow);min-width:0}
-.metric .label{font-size:12px;color:var(--muted)}.metric .value{font-size:25px;font-weight:700;margin-top:9px}
-.metric .emoji{float:right;font-size:20px}
-.panel{margin-top:14px}
-.paneltitle{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.paneltitle h3{margin:0;font-size:16px}
-.btn{background:var(--accent);color:#fff;border-radius:13px;padding:10px 15px}
-.btn.secondary{background:var(--blue);color:#426b7d}.btn.danger{background:#f8e8eb;color:#ad5c6b}
-.btn.small{padding:7px 10px;font-size:12px}
-.formrow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
-.field{display:flex;flex-direction:column;gap:6px}.field label{font-size:12px;color:var(--muted)}
-.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:12px;padding:11px;background:#fff;outline:none;min-width:0}
-.field input:focus,.field select:focus{border-color:var(--accent)}
-.actions{display:flex;gap:8px;align-items:end;flex-wrap:wrap}
-.tablewrap{overflow:auto}
-table{width:100%;border-collapse:collapse;font-size:13px;white-space:nowrap}
-th,td{text-align:left;padding:11px 9px;border-bottom:1px solid #edf2f4}
-th{color:var(--muted);font-weight:600}
-.empty{text-align:center;color:var(--muted);padding:24px}
-.two{display:grid;grid-template-columns:1.2fr .8fr;gap:14px}
-.chartbox{height:230px;position:relative}.chartbox canvas{width:100%;height:100%}
-.productgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-.product{border:1px solid var(--line);border-radius:16px;padding:13px;background:#fff;text-align:left}
-.product strong{display:block}.product span{font-size:12px;color:var(--muted)}
-.product:hover{border-color:var(--accent);background:#f8fdff}
-.pill{font-size:11px;padding:4px 8px;border-radius:20px;background:var(--mint);color:#4c8b74}
-.totalrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed var(--line)}
-.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#385b69;color:#fff;padding:11px 18px;border-radius:14px;display:none;z-index:5}
-@media(max-width:850px){.layout{grid-template-columns:1fr}nav{position:static;display:flex;overflow:auto;gap:4px;padding:8px}nav button{white-space:nowrap;width:auto;margin:0;padding:10px 12px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.two{grid-template-columns:1fr}}
-@media(max-width:560px){.app{padding:12px}.topdate{display:none}.formrow{grid-template-columns:1fr 1fr}.productgrid{grid-template-columns:1fr 1fr}.metric .value{font-size:21px}h1{font-size:18px}}
-@media print{nav,header .topdate,.no-print,.btn{display:none!important}.layout{display:block}.app{max-width:none}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
-</style>
-</head>
+@font-face{font-family:NeedMoodNiuNiu;src:url("./NeedMoodNiuNiu.ttf") format("truetype");font-display:swap}
+:root{--blue:#dff3fa;--paper:#fffdfb;--ink:#425b69;--muted:#8499a4;--pink:#f8e8ef;--mint:#e6f5ee;--line:#d9eaf0;--accent:#62b3d0;--green:#63ad83;--red:#c66d7b;--shadow:0 9px 26px rgba(90,130,145,.10)}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(135deg,#edf8fb,#fbf5f8 60%,#f2faf5);color:var(--ink);font:15px NeedMoodNiuNiu,ui-rounded,system-ui,sans-serif;min-height:100vh;padding-bottom:calc(84px + env(safe-area-inset-bottom))}
+button,input,select,textarea{font:inherit;color:inherit}button{cursor:pointer}header{max-width:1180px;margin:auto;padding:18px 16px 10px;display:flex;align-items:center;gap:12px}
+.logo{width:54px;height:54px;border-radius:18px;background:#fff;display:grid;place-items:center;font-size:30px;box-shadow:var(--shadow)}.brand{font-size:21px;letter-spacing:2px;font-weight:bold}.sub{font-size:11px;color:var(--muted);letter-spacing:1.5px;margin-top:4px}
+main{max-width:1180px;margin:auto;padding:8px 14px 28px}.page{display:none}.page.active{display:block}.pagehead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:16px 4px 18px}.pagehead h1{font-size:27px;margin:0}.hint{font-size:12px;color:var(--muted);margin-top:5px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.card{background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:22px;padding:17px;box-shadow:var(--shadow);min-width:0}.metric .label{font-size:12px;color:var(--muted)}.metric .value{font-size:24px;font-weight:bold;margin-top:8px}.metric .emoji{float:right;font-size:21px}
+.section-title{font-size:17px;font-weight:bold;margin:0 0 13px}.two{display:grid;grid-template-columns:1fr;gap:14px}.btn{border:0;border-radius:13px;padding:11px 16px;background:var(--accent);color:white}.btn.green{background:var(--green)}.btn.soft{background:var(--blue);color:#426b7d}.btn.pink{background:var(--pink);color:#9d5e70}.btn.small{font-size:12px;padding:7px 10px}
+.menu-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.product{border:1px solid var(--line);background:#fff;border-radius:17px;padding:14px;text-align:left;min-height:90px}.product:active{background:#f0fbff}.product strong{display:block;font-size:15px}.product small{display:block;color:var(--muted);margin-top:7px}
+.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field{display:flex;flex-direction:column;gap:6px;min-width:0}.field label{font-size:12px;color:var(--muted)}.field input,.field select,.field textarea{width:100%;min-width:0;border:1px solid var(--line);border-radius:13px;padding:12px;background:#fff;outline:none}.field textarea{min-height:70px;resize:vertical}.field input:focus,.field select:focus{border-color:var(--accent)}
+.rowline{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid #edf2f4}.muted{color:var(--muted);font-size:12px}.total{font-size:20px;font-weight:bold}.chip{display:inline-block;padding:5px 10px;border-radius:20px;background:var(--mint);color:#578b76;font-size:11px}
+.bottomnav{position:fixed;z-index:20;left:0;right:0;bottom:0;display:flex;gap:2px;padding:7px 4px calc(7px + env(safe-area-inset-bottom));background:rgba(255,255,255,.96);backdrop-filter:blur(14px);border-top:1px solid var(--line);box-shadow:0 -5px 24px rgba(90,130,145,.08)}
+.bottomnav button{flex:1;min-width:0;border:0;background:transparent;color:#78909b;border-radius:13px;padding:6px 1px;font-size:10px;white-space:nowrap}.bottomnav button span{display:block;font-size:19px;margin-bottom:3px}.bottomnav button.active{background:#e4f5fa;color:#426b7d;font-weight:bold}
+table{width:100%;border-collapse:collapse;font-size:12px}th,td{text-align:left;padding:10px 7px;border-bottom:1px solid #edf2f4;vertical-align:top}th{color:var(--muted);font-weight:normal}.tablewrap{overflow-x:auto}
+.barwrap{height:190px;display:flex;align-items:end;gap:8px;padding:15px 3px 24px;border-bottom:1px solid var(--line)}.barcol{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:end;align-items:center;height:100%;gap:5px}.bar{width:65%;min-height:3px;background:#83c7b2;border-radius:7px 7px 2px 2px}.bar.negative{background:#e5a8b4}.barlabel{font-size:9px;color:var(--muted)}
+.modalback{position:fixed;inset:0;background:#1c303a66;z-index:40;display:none;align-items:end;justify-content:center;padding:12px}.modalback.open{display:flex}.modal{background:#fff;border-radius:24px 24px 18px 18px;padding:20px;width:min(560px,100%);max-height:88vh;overflow:auto;box-shadow:0 20px 60px #0002}.options{display:flex;flex-wrap:wrap;gap:8px}.option{border:1px solid var(--line);background:#fff;border-radius:12px;padding:9px 12px;font-size:12px}.option.selected{background:var(--blue);border-color:var(--accent)}
+.toast{position:fixed;z-index:60;bottom:95px;left:50%;transform:translateX(-50%);background:#385b69;color:#fff;padding:10px 17px;border-radius:14px;display:none}
+@media(min-width:760px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}.two{grid-template-columns:1.15fr .85fr}.menu-grid{grid-template-columns:repeat(3,minmax(0,1fr))}main{padding-left:22px;padding-right:22px}}
+@media(max-width:380px){.bottomnav button{font-size:9px}.bottomnav button span{font-size:17px}.pagehead h1{font-size:23px}.card{padding:14px}}
+@media print{.bottomnav,header,.no-print{display:none!important}body{padding:0;background:white}.page{display:none!important}.page.active{display:block!important}.card{box-shadow:none;break-inside:avoid}}
+</style></head>
 <body>
-<div class="app">
-<header>
- <div class="brand"><div class="logo">🥀</div><div><h1>GOH YEAN HUAN</h1><div class="sub">POS WORKSPACE · 202403172359 (003618842-W)</div></div></div>
- <div class="topdate" id="todayLabel"></div>
-</header>
-<div class="layout">
-<nav class="no-print">
- <button class="active" data-page="dashboard">🏠 Dashboard</button>
- <button data-page="sales">🧾 New Sale</button>
- <button data-page="expenses">🧺 Expenses</button>
- <button data-page="history">📚 History</button>
- <button data-page="reports">📈 Reports</button>
- <button data-page="settings">⚙️ Settings</button>
-</nav>
+<header><div class="logo">🥀</div><div><div class="brand">GOH YEAN HUAN</div><div class="sub">POS WORKSPACE · 202403172359 (003618842-W)</div></div></header>
 <main>
 <section class="page active" id="dashboard">
- <div class="pagehead"><div><h2>Dashboard</h2><div class="hint">Your business at a glance</div></div><button class="btn secondary" onclick="refresh()">↻ Refresh</button></div>
+ <div class="pagehead"><div><h1>Dashboard</h1><div class="hint" id="dateLabel"></div></div><span class="chip">Business overview</span></div>
  <div class="grid">
-  <div class="card metric"><span class="emoji">💰</span><div class="label">Today's Sales</div><div class="value" id="mSales">RM 0.00</div></div>
-  <div class="card metric"><span class="emoji">🧾</span><div class="label">Today's Expenses</div><div class="value" id="mExpenses">RM 0.00</div></div>
-  <div class="card metric"><span class="emoji">🌷</span><div class="label">Today's Profit</div><div class="value" id="mProfit">RM 0.00</div></div>
-  <div class="card metric"><span class="emoji">🛍️</span><div class="label">Orders Today</div><div class="value" id="mOrders">0</div></div>
+  <div class="card metric"><span class="emoji">💰</span><div class="label">Today's Sales</div><div class="value" id="dSales">RM 0.00</div></div>
+  <div class="card metric"><span class="emoji">🧺</span><div class="label">Today's Expenses</div><div class="value" id="dExpense">RM 0.00</div></div>
+  <div class="card metric"><span class="emoji">🌷</span><div class="label">Today's Profit</div><div class="value" id="dProfit">RM 0.00</div></div>
+  <div class="card metric"><span class="emoji">🧾</span><div class="label">Orders Today</div><div class="value" id="dOrders">0</div></div>
  </div>
- <div class="two panel">
-  <div class="card"><div class="paneltitle"><h3>Profit Trend</h3><span class="pill">Last 7 days</span></div><div class="chartbox"><canvas id="profitChart"></canvas></div></div>
-  <div class="card"><div class="paneltitle"><h3>Today's Summary</h3></div><div class="totalrow"><span>Total sales</span><strong id="sumSales">RM 0.00</strong></div><div class="totalrow"><span>Total expenses</span><strong id="sumExpenses">RM 0.00</strong></div><div class="totalrow"><span>Net profit</span><strong id="sumProfit">RM 0.00</strong></div><div class="hint" style="margin-top:14px">Net profit = sales − expenses</div></div>
- </div>
- <div class="card panel"><div class="paneltitle"><h3>Recent Transactions</h3><button class="btn secondary small" onclick="showPage('history')">View all</button></div><div class="tablewrap"><table><thead><tr><th>Date</th><th>Type</th><th>Description</th><th>Amount</th></tr></thead><tbody id="recentRows"></tbody></table></div></div>
+ <div class="card" style="margin-top:14px"><div class="section-title">Profit Trend · Last 7 Days</div><div class="barwrap" id="profitBars"></div></div>
+ <div class="two" style="margin-top:14px"><div class="card"><div class="section-title">Today's Summary</div><div class="rowline"><span>Revenue</span><b id="sRevenue">RM 0.00</b></div><div class="rowline"><span>Expenses</span><b id="sExpense">RM 0.00</b></div><div class="rowline"><span>Net Profit</span><b id="sProfit">RM 0.00</b></div></div><div class="card"><div class="section-title">Quick Actions</div><div class="options"><button class="btn" onclick="go('menu')">＋ New Order</button><button class="btn green" onclick="go('expense')">＋ Expense</button><button class="btn soft" onclick="go('reports')">View Reports</button></div></div></div>
 </section>
-<section class="page" id="sales">
- <div class="pagehead"><div><h2>New Sale</h2><div class="hint">Add an order to today's sales</div></div></div>
- <div class="two">
-  <div class="card"><div class="paneltitle"><h3>Quick Menu</h3><span class="pill">Tap to add</span></div><div class="productgrid" id="quickProducts"></div></div>
-  <div class="card"><div class="paneltitle"><h3>Current Order</h3><button class="btn secondary small" onclick="clearCart()">Clear</button></div><div id="cartRows" class="empty">No items yet</div><div class="totalrow"><strong>Total</strong><strong id="cartTotal">RM 0.00</strong></div><div class="field" style="margin-top:12px"><label>Payment method</label><select id="paymentMethod"><option>Cash</option><option>QR Pay</option><option>Card</option><option>Other</option></select></div><div class="field" style="margin-top:10px"><label>Note (optional)</label><input id="saleNote" placeholder="Order note"></div><button class="btn" style="width:100%;margin-top:13px" onclick="saveSale()">Complete Sale</button></div>
- </div>
- <div class="card panel"><div class="paneltitle"><h3>Add Custom Item</h3></div><div class="formrow"><div class="field"><label>Item name</label><input id="customName" placeholder="Item name"></div><div class="field"><label>Unit price (RM)</label><input id="customPrice" type="number" min="0" step=".01" placeholder="0.00"></div><div class="field"><label>Quantity</label><input id="customQty" type="number" min="1" value="1"></div><div class="actions"><button class="btn secondary" onclick="addCustom()">Add item</button></div></div></div>
+<section class="page" id="menu">
+ <div class="pagehead"><div><h1>Menu</h1><div class="hint">Choose item to customize and add to order</div></div><span class="chip" id="cartBadge">0 items</span></div>
+ <div class="card"><div class="section-title">Keow Teow & Noodles</div><div class="menu-grid" id="products"></div></div>
+ <div class="card" style="margin-top:14px"><div class="section-title">Current Order</div><div id="cartList" class="muted">No items added yet.</div><div class="rowline"><b>Order Total</b><b class="total" id="cartSum">RM 0.00</b></div><button class="btn" style="width:100%;margin-top:12px" onclick="go('cart')">Continue to Cart & Payment →</button></div>
 </section>
-<section class="page" id="expenses">
- <div class="pagehead"><div><h2>Expenses</h2><div class="hint">Record business spending</div></div></div>
- <div class="card"><div class="formrow">
-  <div class="field"><label>Date</label><input type="date" id="expenseDate"></div>
-  <div class="field"><label>Item / Description</label><input id="expenseName" placeholder="e.g. Ingredients"></div>
-  <div class="field"><label>Supplier / Merchant</label><input id="expenseMerchant" placeholder="Merchant"></div>
-  <div class="field"><label>Amount (RM)</label><input type="number" id="expenseAmount" min="0" step=".01" placeholder="0.00"></div>
- </div><button class="btn" style="margin-top:13px" onclick="saveExpense()">＋ Save Expense</button></div>
- <div class="card panel"><div class="paneltitle"><h3>Expense Records</h3><span class="pill" id="expenseCount">0 records</span></div><div class="tablewrap"><table><thead><tr><th>Date</th><th>Description</th><th>Merchant</th><th>Amount</th><th class="no-print">Action</th></tr></thead><tbody id="expenseRows"></tbody></table></div></div>
+<section class="page" id="cart">
+ <div class="pagehead"><div><h1>View Cart</h1><div class="hint">Review order before payment</div></div></div>
+ <div class="card"><div id="cartReview" class="muted">Your cart is empty.</div><div class="rowline"><b>Total</b><b class="total" id="reviewTotal">RM 0.00</b></div></div>
+ <div class="card" style="margin-top:14px"><div class="section-title">Payment</div><div class="field"><label>Payment Method</label><select id="payMethod"><option value="cash">Cash</option><option value="card">Card</option><option value="tng">Touch 'N Go</option><option value="duitnow">DuitNow</option></select></div><div class="field" style="margin-top:12px"><label>Cash Received (RM, cash only)</label><input id="cashReceived" type="number" min="0" step=".01" placeholder="0.00"></div><div class="rowline"><span>Change</span><b id="changeDue">RM 0.00</b></div><button class="btn green" style="width:100%;margin-top:12px" onclick="completeSale()">Complete Payment & Save Order</button></div>
+</section>
+<section class="page" id="expense">
+ <div class="pagehead"><div><h1>Expense</h1><div class="hint">Manage your business expenses</div></div><button class="btn green" onclick="toggleExpenseForm()">＋ Add Expense</button></div>
+ <div class="grid"><div class="card metric"><div class="label">Today's Expense Records</div><div class="value" id="eCount">0</div></div><div class="card metric"><div class="label">Today's Total</div><div class="value" id="eTotal">RM 0.00</div></div></div>
+ <div class="card" id="expenseFormCard" style="margin-top:14px;display:none"><div class="section-title">Add New Expense</div><form id="expenseForm"><div class="formgrid">
+  <div class="field"><label>Category</label><select id="eCategory"><option>SHOP</option><option>FISH</option><option>PORK</option><option>FISHBALL</option><option>KEOW TEOW</option><option>INGREDIENT</option><option>GROCERY</option><option>GAS</option><option>PETROL</option><option>PACKAGING</option><option>UTILITY</option><option>OTHER</option></select></div>
+  <div class="field"><label>Supplier / Merchant</label><input id="eSupplier" placeholder="e.g. UTC Fishball"></div>
+  <div class="field"><label>Amount (RM)</label><input id="eAmount" type="number" min=".01" step=".01" placeholder="0.00" required></div>
+  <div class="field"><label>Description</label><input id="eDescription" placeholder="Item / description"></div>
+ </div><div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px"><button type="button" class="btn soft" onclick="toggleExpenseForm()">Cancel</button><button class="btn green" type="submit">Save Expense</button></div></form></div>
+ <div class="card" style="margin-top:14px"><div class="section-title">Today's Expense List</div><div id="expenseList" class="muted">No expenses recorded today.</div></div>
 </section>
 <section class="page" id="history">
- <div class="pagehead"><div><h2>Transaction History</h2><div class="hint">Sales and expenses in one place</div></div><button class="btn secondary" onclick="exportCSV()">↓ Export CSV</button></div>
- <div class="card"><div class="formrow"><div class="field"><label>From</label><input type="date" id="filterFrom" onchange="renderHistory()"></div><div class="field"><label>To</label><input type="date" id="filterTo" onchange="renderHistory()"></div><div class="field"><label>Type</label><select id="filterType" onchange="renderHistory()"><option value="all">All</option><option value="sale">Sales</option><option value="expense">Expenses</option></select></div><div class="actions"><button class="btn secondary" onclick="resetFilters()">Reset filters</button></div></div></div>
- <div class="card panel"><div class="tablewrap"><table><thead><tr><th>Date</th><th>Type</th><th>Description</th><th>Payment / Merchant</th><th>Amount</th><th class="no-print">Action</th></tr></thead><tbody id="historyRows"></tbody></table></div></div>
+ <div class="pagehead"><div><h1>History</h1><div class="hint">Saved sales and expense records</div></div><button class="btn soft" onclick="exportCSV()">Export CSV</button></div>
+ <div class="card"><div class="formgrid"><div class="field"><label>From</label><input type="date" id="hFrom" onchange="renderHistory()"></div><div class="field"><label>To</label><input type="date" id="hTo" onchange="renderHistory()"></div></div><div class="field" style="margin-top:10px"><label>Type</label><select id="hType" onchange="renderHistory()"><option value="all">All records</option><option value="sale">Sales</option><option value="expense">Expenses</option></select></div></div>
+ <div class="card" style="margin-top:14px"><div class="tablewrap"><table><thead><tr><th>Date</th><th>Type / Details</th><th>Amount</th><th class="no-print">Action</th></tr></thead><tbody id="historyRows"></tbody></table></div></div>
 </section>
 <section class="page" id="reports">
- <div class="pagehead"><div><h2>Reports</h2><div class="hint">Sales, expenses and profit overview</div></div><button class="btn secondary" onclick="window.print()">Print report</button></div>
- <div class="grid">
-  <div class="card metric"><div class="label">Total Sales</div><div class="value" id="rSales">RM 0.00</div></div>
-  <div class="card metric"><div class="label">Total Expenses</div><div class="value" id="rExpenses">RM 0.00</div></div>
-  <div class="card metric"><div class="label">Net Profit</div><div class="value" id="rProfit">RM 0.00</div></div>
-  <div class="card metric"><div class="label">Total Orders</div><div class="value" id="rOrders">0</div></div>
- </div>
- <div class="card panel"><div class="paneltitle"><h3>Daily Performance · Last 7 days</h3></div><div class="tablewrap"><table><thead><tr><th>Date</th><th>Sales</th><th>Expenses</th><th>Profit</th></tr></thead><tbody id="dailyRows"></tbody></table></div></div>
+ <div class="pagehead"><div><h1>Reports</h1><div class="hint">Business performance summary</div></div><button class="btn soft" onclick="window.print()">Print</button></div>
+ <div class="grid"><div class="card metric"><div class="label">All Sales</div><div class="value" id="rSales">RM 0.00</div></div><div class="card metric"><div class="label">All Expenses</div><div class="value" id="rExpense">RM 0.00</div></div><div class="card metric"><div class="label">Net Profit</div><div class="value" id="rProfit">RM 0.00</div></div><div class="card metric"><div class="label">Orders</div><div class="value" id="rOrders">0</div></div></div>
+ <div class="card" style="margin-top:14px"><div class="section-title">Daily Summary · Last 7 Days</div><div class="tablewrap"><table><thead><tr><th>Date</th><th>Sales</th><th>Expenses</th><th>Profit</th></tr></thead><tbody id="dailyRows"></tbody></table></div></div>
 </section>
-<section class="page" id="settings">
- <div class="pagehead"><div><h2>Settings & Backup</h2><div class="hint">Manage menu items and protect your records</div></div></div>
- <div class="card"><div class="paneltitle"><h3>Menu Items</h3></div><div class="formrow"><div class="field"><label>Item name</label><input id="menuName" placeholder="Product name"></div><div class="field"><label>Price (RM)</label><input id="menuPrice" type="number" min="0" step=".01" placeholder="0.00"></div><div class="actions"><button class="btn" onclick="addMenu()">Add menu item</button></div></div><div class="tablewrap" style="margin-top:14px"><table><thead><tr><th>Item</th><th>Price</th><th>Action</th></tr></thead><tbody id="menuRows"></tbody></table></div></div>
- <div class="card panel"><div class="paneltitle"><h3>Data Backup</h3></div><p class="hint">Your data is saved locally in this browser on this device. Export a backup regularly.</p><div class="actions"><button class="btn secondary" onclick="backupData()">Export backup</button><label class="btn secondary" for="restoreFile">Import backup</label><input id="restoreFile" type="file" accept="application/json" hidden onchange="restoreData(event)"></div><p class="hint" style="margin-top:12px">Important: clearing browser data or changing device may remove locally saved records. Keep a backup file.</p></div>
+<section class="page" id="backup">
+ <div class="pagehead"><div><h1>Backup</h1><div class="hint">Protect your business records</div></div></div>
+ <div class="card"><div class="section-title">Data Backup & Restore</div><p class="muted">Records are stored in this browser on this device. Export a backup regularly.</p><button class="btn" onclick="backupData()">Download Backup</button><label class="btn soft" for="restoreInput" style="display:inline-block;margin-left:6px">Restore Backup</label><input id="restoreInput" type="file" accept="application/json" hidden onchange="restoreData(event)"></div>
+ <div class="card" style="margin-top:14px"><div class="section-title">Menu Prices</div><div id="priceEditor"></div></div>
 </section>
 </main>
-</div>
-</div>
+<nav class="bottomnav no-print" id="bottomNav">
+ <button class="active" data-page="dashboard" onclick="go('dashboard')"><span>🏠</span>Home</button>
+ <button data-page="menu" onclick="go('menu')"><span>🍜</span>Menu</button>
+ <button data-page="cart" onclick="go('cart')"><span>🛒</span>Cart</button>
+ <button data-page="expense" onclick="go('expense')"><span>🧺</span>Expense</button>
+ <button data-page="history" onclick="go('history')"><span>📚</span>History</button>
+ <button data-page="reports" onclick="go('reports')"><span>📈</span>Report</button>
+ <button data-page="backup" onclick="go('backup')"><span>💾</span>Backup</button>
+</nav>
+<div class="modalback" id="customModal"><div class="modal"><div style="display:flex;justify-content:space-between;align-items:center"><h2 id="modalTitle" style="margin:0;font-size:21px">Customize Item</h2><button class="btn pink small" onclick="closeModal()">✕</button></div><div id="modalBody"></div></div></div>
 <div class="toast" id="toast"></div>
 <script>
-const KEY='gohYeanHuanPOS_v1';
-const defaultMenu=[{id:'p1',name:'Keow Teow Sup (S)',price:5.5},{id:'p2',name:'Keow Teow Sup (B)',price:6.5},{id:'p3',name:'Fish Keow Teow Sup',price:8},{id:'p4',name:'Tom Yum',price:9},{id:'p5',name:'Seafood Tom Yum',price:10}];
-let db=loadDB(),cart=[];
-function loadDB(){try{return JSON.parse(localStorage.getItem(KEY))||{sales:[],expenses:[],menu:defaultMenu}}catch(e){return{sales:[],expenses:[],menu:defaultMenu}}}
-function persist(){localStorage.setItem(KEY,JSON.stringify(db));refresh()}
-function money(n){return 'RM '+Number(n||0).toFixed(2)}
+const DBKEY='gohYeanHuanPOS_restored_v2';
+const NOODLES=['Keow Teow','Bihun','Mee','Maggie','Meetaimuk'];
+const ADDONS=[['egg','Egg',1],['pork','Pork',1],['vegetable','Vegetable',1],['chicken','Chicken',1],['fish','Fish',1.5]];
+const DEFAULT_PRODUCTS=[
+ {id:'sup',name:'KEOW TEOW SUP',price:5.5,emoji:'🍜',custom:true},
+ {id:'kering',name:'KEOW TEOW KERING',price:5.5,emoji:'🥢',custom:true},
+ {id:'fish',name:'KEOW TEOW SUP FISH',price:8,emoji:'🐟',custom:true},
+ {id:'tom-yum',name:'TOMYUM',price:9,emoji:'🌶️',custom:true},
+ {id:'special',name:'SPECIAL / CUSTOM ITEM',price:0,emoji:'✨',custom:true},
+ {id:'worker',name:'WORKER PRICE',price:0,emoji:'👩🏻‍🍳',custom:true}
+];
+function loadDB(){try{let d=JSON.parse(localStorage.getItem(DBKEY)||'null');return d&&Array.isArray(d.sales)&&Array.isArray(d.expenses)?d:{sales:[],expenses:[],products:DEFAULT_PRODUCTS}}catch(e){return{sales:[],expenses:[],products:DEFAULT_PRODUCTS}}}
+let db=loadDB(),cart=[],editingExpense=null,modalProduct=null;
+function save(){localStorage.setItem(DBKEY,JSON.stringify(db));refresh()}
 function today(){let d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
-function toast(s){let el=document.getElementById('toast');el.textContent=s;el.style.display='block';setTimeout(()=>el.style.display='none',2200)}
-document.getElementById('todayLabel').textContent=new Date().toLocaleDateString(undefined,{weekday:'short',year:'numeric',month:'short',day:'numeric'});
-document.getElementById('expenseDate').value=today();
-document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
-function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));if(id==='sales')renderCart();if(id==='history')renderHistory();if(id==='settings')renderMenu()}
-function sum(arr){return arr.reduce((a,x)=>a+Number(x.total??x.amount??0),0)}
-function daySales(d){return db.sales.filter(x=>x.date===d)}
-function dayExpenses(d){return db.expenses.filter(x=>x.date===d)}
-function refresh(){
- let d=today(),s=sum(daySales(d)),e=sum(dayExpenses(d)),p=s-e;
- ['mSales','sumSales'].forEach(id=>document.getElementById(id).textContent=money(s));
- ['mExpenses','sumExpenses'].forEach(id=>document.getElementById(id).textContent=money(e));
- ['mProfit','sumProfit'].forEach(id=>document.getElementById(id).textContent=money(p));
- document.getElementById('mOrders').textContent=daySales(d).length;
- document.getElementById('rSales').textContent=money(sum(db.sales));document.getElementById('rExpenses').textContent=money(sum(db.expenses));document.getElementById('rProfit').textContent=money(sum(db.sales)-sum(db.expenses));document.getElementById('rOrders').textContent=db.sales.length;
- renderRecent();renderExpenseRows();renderHistory();renderDaily();renderChart();
-}
-function renderRecent(){let a=[...db.sales.map(x=>({...x,type:'Sale',desc:x.items.map(i=>i.name+' ×'+i.qty).join(', ')})),...db.expenses.map(x=>({...x,type:'Expense',desc:x.name,amount:x.amount}))].sort((a,b)=>(b.created||b.date).localeCompare(a.created||a.date)).slice(0,7);document.getElementById('recentRows').innerHTML=a.length?a.map(x=>`<tr><td>${x.date}</td><td>${x.type}</td><td>${esc(x.desc)}</td><td>${money(x.total??x.amount)}</td></tr>`).join(''):'<tr><td colspan="4" class="empty">No transactions yet</td></tr>'}
-function renderQuick(){document.getElementById('quickProducts').innerHTML=db.menu.map(p=>`<button class="product" onclick="addCart('${p.id}')"><strong>${esc(p.name)}</strong><span>${money(p.price)} · Add ＋</span></button>`).join('')}
-function addCart(id){let p=db.menu.find(x=>x.id===id);if(!p)return;let x=cart.find(i=>i.id===id);if(x)x.qty++;else cart.push({...p,qty:1});renderCart()}
-function addCustom(){let n=document.getElementById('customName').value.trim(),p=Number(document.getElementById('customPrice').value),q=Math.max(1,Number(document.getElementById('customQty').value)||1);if(!n||p<0||!Number.isFinite(p)){toast('Enter item and valid price');return}cart.push({id:'custom'+Date.now(),name:n,price:p,qty:q});document.getElementById('customName').value='';renderCart()}
-function renderCart(){renderQuick();let el=document.getElementById('cartRows');if(!cart.length){el.className='empty';el.textContent='No items yet'}else{el.className='';el.innerHTML=cart.map((x,i)=>`<div class="totalrow"><span>${esc(x.name)}<br><small>${money(x.price)} × ${x.qty}</small></span><span><b>${money(x.price*x.qty)}</b><br><button class="btn secondary small" onclick="changeQty(${i},-1)">−</button> <button class="btn secondary small" onclick="changeQty(${i},1)">＋</button> <button class="btn danger small" onclick="removeCart(${i})">×</button></span></div>`).join('')}document.getElementById('cartTotal').textContent=money(cart.reduce((a,x)=>a+x.price*x.qty,0))}
-function changeQty(i,n){cart[i].qty+=n;if(cart[i].qty<=0)cart.splice(i,1);renderCart()}function removeCart(i){cart.splice(i,1);renderCart()}function clearCart(){cart=[];renderCart()}
-function saveSale(){if(!cart.length){toast('Add at least one item');return}let total=cart.reduce((a,x)=>a+x.price*x.qty,0);db.sales.push({id:'s'+Date.now(),date:today(),created:new Date().toISOString(),items:cart.map(x=>({...x})),total,payment:document.getElementById('paymentMethod').value,note:document.getElementById('saleNote').value});cart=[];document.getElementById('saleNote').value='';persist();renderCart();toast('Sale saved successfully')}
-function saveExpense(){let date=document.getElementById('expenseDate').value,name=document.getElementById('expenseName').value.trim(),merchant=document.getElementById('expenseMerchant').value.trim(),amount=Number(document.getElementById('expenseAmount').value);if(!date||!name||!(amount>0)){toast('Please enter date, description and amount');return}db.expenses.push({id:'e'+Date.now(),date,created:new Date().toISOString(),name,merchant,amount});document.getElementById('expenseName').value='';document.getElementById('expenseMerchant').value='';document.getElementById('expenseAmount').value='';persist();toast('Expense saved')}
-function renderExpenseRows(){let a=[...db.expenses].sort((x,y)=>y.date.localeCompare(x.date));document.getElementById('expenseCount').textContent=a.length+' records';document.getElementById('expenseRows').innerHTML=a.length?a.map(x=>`<tr><td>${x.date}</td><td>${esc(x.name)}</td><td>${esc(x.merchant||'—')}</td><td>${money(x.amount)}</td><td class="no-print"><button class="btn danger small" onclick="delRecord('expense','${x.id}')">Delete</button></td></tr>`).join(''):'<tr><td colspan="5" class="empty">No expenses recorded</td></tr>'}
-function allRows(){return [...db.sales.map(x=>({id:x.id,date:x.date,type:'sale',desc:x.items.map(i=>i.name+' ×'+i.qty).join(', '),meta:x.payment,amount:x.total})),...db.expenses.map(x=>({id:x.id,date:x.date,type:'expense',desc:x.name,meta:x.merchant||'—',amount:x.amount}))].sort((a,b)=>b.date.localeCompare(a.date))}
-function renderHistory(){let from=document.getElementById('filterFrom')?.value||'',to=document.getElementById('filterTo')?.value||'',type=document.getElementById('filterType')?.value||'all';let a=allRows().filter(x=>(!from||x.date>=from)&&(!to||x.date<=to)&&(type==='all'||x.type===type));document.getElementById('historyRows').innerHTML=a.length?a.map(x=>`<tr><td>${x.date}</td><td>${x.type==='sale'?'Sale':'Expense'}</td><td>${esc(x.desc)}</td><td>${esc(x.meta)}</td><td>${money(x.amount)}</td><td class="no-print"><button class="btn danger small" onclick="delRecord('${x.type}','${x.id}')">Delete</button></td></tr>`).join(''):'<tr><td colspan="6" class="empty">No matching records</td></tr>'}
-function resetFilters(){['filterFrom','filterTo'].forEach(id=>document.getElementById(id).value='');document.getElementById('filterType').value='all';renderHistory()}
-function delRecord(type,id){if(!confirm('Delete this record?'))return;if(type==='sale')db.sales=db.sales.filter(x=>x.id!==id);else db.expenses=db.expenses.filter(x=>x.id!==id);persist();toast('Record deleted')}
-function renderDaily(){let days=[];for(let i=6;i>=0;i--){let d=new Date();d.setDate(d.getDate()-i);let k=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');let s=sum(daySales(k)),e=sum(dayExpenses(k));days.push({date:k,s,e,p:s-e})}document.getElementById('dailyRows').innerHTML=days.map(x=>`<tr><td>${x.date}</td><td>${money(x.s)}</td><td>${money(x.e)}</td><td>${money(x.p)}</td></tr>`).join('')}
-function renderChart(){let c=document.getElementById('profitChart');if(!c)return;let rect=c.getBoundingClientRect(),w=Math.max(300,rect.width),h=230,dpr=window.devicePixelRatio||1;c.width=w*dpr;c.height=h*dpr;let ctx=c.getContext('2d');ctx.scale(dpr,dpr);let vals=[];for(let i=6;i>=0;i--){let d=new Date();d.setDate(d.getDate()-i);let k=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');vals.push({label:k.slice(5),v:sum(daySales(k))-sum(dayExpenses(k))})}let max=Math.max(10,...vals.map(x=>Math.abs(x.v))),left=35,right=12,top=15,bottom=30,base=h-bottom;ctx.strokeStyle='#e6eef1';ctx.fillStyle='#91a4ad';ctx.font='11px sans-serif';for(let j=0;j<4;j++){let y=top+(base-top)*j/3;ctx.beginPath();ctx.moveTo(left,y);ctx.lineTo(w-right,y);ctx.stroke()}let step=(w-left-right)/vals.length;vals.forEach((x,i)=>{let bh=Math.abs(x.v)/max*(base-top-12),xx=left+i*step+step*.22,yy=x.v>=0?base-bh:base;ctx.fillStyle=x.v>=0?'#82c8b0':'#e7a5b0';ctx.beginPath();ctx.roundRect(xx,yy,step*.56,Math.max(2,bh),5);ctx.fill();ctx.fillStyle='#8499a4';ctx.fillText(x.label,xx-2,h-8);});}
-function addMenu(){let name=document.getElementById('menuName').value.trim(),price=Number(document.getElementById('menuPrice').value);if(!name||price<0||!Number.isFinite(price)){toast('Enter item and price');return}db.menu.push({id:'m'+Date.now(),name,price});document.getElementById('menuName').value='';document.getElementById('menuPrice').value='';persist();renderMenu();toast('Menu item added')}
-function renderMenu(){document.getElementById('menuRows').innerHTML=db.menu.map(x=>`<tr><td>${esc(x.name)}</td><td>${money(x.price)}</td><td><button class="btn danger small" onclick="removeMenu('${x.id}')">Remove</button></td></tr>`).join('')}
-function removeMenu(id){if(!confirm('Remove this menu item?'))return;db.menu=db.menu.filter(x=>x.id!==id);persist();renderMenu()}
-function backupData(){let blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='GOH-YEAN-HUAN-POS-backup-'+today()+'.json';a.click();URL.revokeObjectURL(a.href)}
-function restoreData(ev){let f=ev.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let x=JSON.parse(r.result);if(!Array.isArray(x.sales)||!Array.isArray(x.expenses)||!Array.isArray(x.menu))throw Error();if(confirm('Replace current records with this backup?')){db=x;persist();renderMenu();toast('Backup restored')}}catch(e){toast('Invalid backup file')}};r.readAsText(f);ev.target.value=''}
-function exportCSV(){let rows=[['Date','Type','Description','Payment/Merchant','Amount'],...allRows().map(x=>[x.date,x.type,x.desc,x.meta,x.amount])];let csv=rows.map(r=>r.map(v=>'"'+String(v??'').replaceAll('"','""')+'"').join(',')).join('\n');let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='GOH-POS-transactions.csv';a.click();URL.revokeObjectURL(a.href)}
-function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function renderMenuInit(){renderQuick();renderMenu()}
-function init(){renderMenuInit();refresh();renderCart()}
-window.addEventListener('resize',()=>{if(document.getElementById('dashboard').classList.contains('active'))renderChart()});
-init();
-</script>
-</body>
-</html>
+function money(v){return 'RM '+(Number(v)||0).toFixed(2)}
+function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function toast(t){let e=document.getElementById('toast');e.textContent=t;e.style.display='block';setTimeout(()=>e.style.display='none',2000)}
+function go(id){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('.bottomnav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));if(id==='cart')renderCartReview();window.scrollTo({top:0,behavior:'smooth'})}
+function sum(a,k){return a.reduce((s,x)=>s+Number(x[k]||0),0)}
+function salesOn(d){return db.sales.filter(x=>x.date===d)}
+function expensesOn(d){return db.expenses.filter(x=>x.date===d)}
+function productPrice(p){return Number(p.price)||0}
+function itemTotal(x){return Number(x.unitPrice||x.price||0)*Number(x.qty||1)}
+function cartTotal(){return cart.reduce((s,x)=>s+itemTotal(x),0)}
+function renderProducts(){document.getElementById('products').innerHTML=db.products.map(p=>`<button class="product" onclick="openCustomize('${p.id}')"><strong>${p.emoji||'🍜'} ${esc(p.name)}</strong><small>${p.price?money(p.price):'Set price'} · Tap to customize</small></button>`).join('')}
+function openCustomize(id){modalProduct=db.products.find(p=>p.id===id);if(!modalProduct)return;let custom=modalProduct.custom!==false;document.getElementById('modalTitle').textContent=modalProduct.name;document.getElementById('modalBody').innerHTML=`
+<div style="margin-top:18px"><div class="section-title">Size</div><div class="options"><button class="option selected" id="sizeS" onclick="setSize('small')">Small (S) + RM 0.00</button><button class="option" id="sizeB" onclick="setSize('big')">Big (B) + RM 1.00</button></div></div>
+<div style="margin-top:18px"><div class="section-title">Choose Noodles · Multiple selection</div><div class="options">${NOODLES.map(n=>`<button class="option ${n==='Keow Teow'?'selected':''}" data-noodle="${n}" onclick="toggleChoice(this)">${n}</button>`).join('')}</div></div>
+<div style="margin-top:18px"><div class="section-title">Add-ons</div><div class="options">${ADDONS.map(a=>`<button class="option" data-addon="${a[0]}" onclick="toggleChoice(this)">${a[1]} +${money(a[2])}</button>`).join('')}</div></div>
+<div class="formgrid" style="margin-top:18px"><div class="field"><label>Quantity</label><input id="customQty" type="number" min="1" value="1"></div><div class="field"><label>Unit price override (RM, optional)</label><input id="customOverride" type="number" min="0" step=".01" placeholder="${modalProduct.price||'Enter price'}"></div></div>
+<div class="field" style="margin-top:12px"><label>Note / Worker price note</label><input id="customNote" placeholder="Optional"></div>
+<div class="rowline" style="margin-top:12px"><span>Base price</span><b>${money(modalProduct.price)}</b></div>
+<button class="btn" style="width:100%;margin-top:14px" onclick="confirmCustomize()">Add to Order</button>`;document.getElementById('customModal').classList.add('open');window.currentSize='small'}
+function setSize(s){window.currentSize=s;document.getElementById('sizeS').classList.toggle('selected',s==='small');document.getElementById('sizeB').classList.toggle('selected',s==='big')}
+function toggleChoice(b){b.classList.toggle('selected')}
+function closeModal(){document.getElementById('customModal').classList.remove('open')}
+function confirmCustomize(){let size=window.currentSize||'small',noodles=[...document.querySelectorAll('[data-noodle].selected')].map(x=>x.dataset.noodle),addons=[...document.querySelectorAll('[data-addon].selected')].map(x=>x.dataset.addon),qty=Math.max(1,Number(document.getElementById('customQty').value)||1),override=document.getElementById('customOverride').value,base=override!==''?Number(override):productPrice(modalProduct),extra=addons.reduce((s,id)=>s+(ADDONS.find(a=>a[0]===id)?.[2]||0),0),unit=base+(size==='big'?1:0)+extra;if(!Number.isFinite(unit)||unit<0){toast('Please enter a valid price');return}cart.push({id:'ci'+Date.now()+Math.random(),productId:modalProduct.id,name:modalProduct.name,emoji:modalProduct.emoji,basePrice:base,size,noodles,addons,unitPrice:unit,qty,note:document.getElementById('customNote').value});closeModal();renderCart();toast('Added to order')}
+function renderCart(){let el=document.getElementById('cartList');document.getElementById('cartBadge').textContent=cart.reduce((s,x)=>s+x.qty,0)+' items';el.innerHTML=cart.length?cart.map((x,i)=>`<div class="rowline"><div style="flex:1"><b>${x.emoji||'🍜'} ${esc(x.name)}</b><div class="muted">${x.size} · ${(x.noodles||[]).join(' + ')} · ${(x.addons||[]).join(', ')}</div><div class="muted">${money(x.unitPrice)} × ${x.qty}</div></div><div><b>${money(itemTotal(x))}</b><div style="display:flex;gap:4px;margin-top:5px"><button class="btn soft small" onclick="qtyCart(${i},-1)">−</button><button class="btn soft small" onclick="qtyCart(${i},1)">＋</button><button class="btn pink small" onclick="removeCart(${i})">×</button></div></div></div>`).join(''):'<div class="muted" style="padding:20px;text-align:center">No items added yet.</div>';document.getElementById('cartSum').textContent=money(cartTotal())}
+function qtyCart(i,n){cart[i].qty+=n;if(cart[i].qty<1)cart.splice(i,1);renderCart()}
+function removeCart(i){cart.splice(i,1);renderCart()}
+function renderCartReview(){document.getElementById('cartReview').innerHTML=cart.length?cart.map(x=>`<div class="rowline"><span>${esc(x.name)} × ${x.qty}<div class="muted">${(x.noodles||[]).join(' + ')} · ${(x.addons||[]).join(', ')}</div></span><b>${money(itemTotal(x))}</b></div>`).join(''):'Your cart is empty.';document.getElementById('reviewTotal').textContent=money(cartTotal())}
+document.getElementById('cashReceived').addEventListener('input',()=>{document.getElementById('changeDue').textContent=money(Math.max(0,Number(document.getElementById('cashReceived').value)-cartTotal()))});
+function completeSale(){if(!cart.length){toast('Cart is empty');return}let method=document.getElementById('payMethod').value,received=Number(document.getElementById('cashReceived').value)||0,total=cartTotal();if(method==='cash'&&received<total){toast('Cash received is less than total');return}let order={id:'S'+Date.now(),date:today(),createdAt:new Date().toISOString(),items:cart.map(x=>({...x})),total,paymentMethod:method,cashReceived:method==='cash'?received:total,change:method==='cash'?received-total:0};db.sales.push(order);cart=[];save();renderCart();renderCartReview();document.getElementById('cashReceived').value='';toast('Payment saved successfully');go('history')}
+function toggleExpenseForm(){let x=document.getElementById('expenseFormCard');x.style.display=x.style.display==='none'?'block':'none'}
+document.getElementById('expenseForm').addEventListener('submit',e=>{e.preventDefault();let x={id:'E'+Date.now(),date:today(),createdAt:new Date().toISOString(),category:document.getElementById('eCategory').value,supplier:document.getElementById('eSupplier').value.trim(),amount:Number(document.getElementById('eAmount').value),description:document.getElementById('eDescription').value.trim()};if(!(x.amount>0)){toast('Enter a valid amount');return}db.expenses.push(x);save();e.target.reset();toggleExpenseForm();toast('Expense saved')});
+function editExpense(id){let x=db.expenses.find(a=>a.id===id);if(!x)return;document.getElementById('eCategory').value=x.category||'OTHER';document.getElementById('eSupplier').value=x.supplier||'';document.getElementById('eAmount').value=x.amount;document.getElementById('eDescription').value=x.description||'';editingExpense=id;document.getElementById('expenseFormCard').style.display='block';let b=document.querySelector('#expenseForm button[type=submit]');b.textContent='Update Expense';document.getElementById('expenseForm').onsubmit=e=>{e.preventDefault();x.category=document.getElementById('eCategory').value;x.supplier=document.getElementById('eSupplier').value.trim();x.amount=Number(document.getElementById('eAmount').value);x.description=document.getElementById('eDescription').value.trim();editingExpense=null;document.getElementById('expenseForm').onsubmit=null;save();document.getElementById('expenseForm').reset();b.textContent='Save Expense';toggleExpenseForm();toast('Expense updated')}}
+function deleteExpense(id){if(!confirm('Delete this expense record?'))return;db.expenses=db.expenses.filter(x=>x.id!==id);save()}
+function printExpense(id){let x=db.expenses.find(a=>a.id===id);if(!x)return;let w=window.open('','_blank','width=420,height=650');if(!w){toast('Allow pop-ups to print');return}w.document.write(`<html><head><title>Expense</title><style>body{font:14px Arial;padding:25px;color:#263c49}.line{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px dashed #ccc}h2{text-align:center}</style></head><body><h2>GOH YEAN HUAN</h2><p style="text-align:center">EXPENSE RECORD</p><div class="line"><span>Date</span><b>${esc(x.date)}</b></div><div class="line"><span>Category</span><b>${esc(x.category)}</b></div><div class="line"><span>Supplier</span><b>${esc(x.supplier)}</b></div><div class="line"><span>Description</span><b>${esc(x.description)}</b></div><div class="line"><span>Amount</span><b>${money(x.amount)}</b></div><script>window.onload=()=>window.print()<\/script></body></html>`);w.document.close()}
+function renderExpenses(){let a=expensesOn(today());document.getElementById('eCount').textContent=a.length;document.getElementById('eTotal').textContent=money(sum(a,'amount'));document.getElementById('expenseList').innerHTML=a.length?a.map(x=>`<div class="rowline"><div style="flex:1;min-width:0"><span class="chip">${esc(x.category)}</span><div style="margin-top:7px"><b>${esc(x.supplier||'—')}</b></div><div class="muted">${esc(x.description||'')}</div></div><div style="text-align:right"><b>${money(x.amount)}</b><div style="display:flex;gap:4px;margin-top:7px"><button class="btn soft small" onclick="editExpense('${x.id}')">Edit</button><button class="btn soft small" onclick="printExpense('${x.id}')">Print</button><button class="btn pink small" onclick="deleteExpense('${x.id}')">×</button></div></div></div>`).join(''):'<div class="muted" style="padding:20px;text-align:center">No expenses recorded today.</div>'}
+function allHistory(){return [...db.sales.map(x=>({id:x.id,date:x.date,type:'sale',desc:(x.items||[]).map(i=>i.name+' ×'+i.qty).join(', '),amount:x.total})),...db.expenses.map(x=>({id:x.id,date:x.date,type:'expense',desc:(x.category||'')+' · '+(x.supplier||'')+' · '+(x.description||''),amount:x.amount}))].sort((a,b)=>b.date.localeCompare(a.date))}
+function renderHistory(){let from=document.getElementById('hFrom').value,to=document.getElementById('hTo').value,type=document.getElementById('hType').value;let a=allHistory().filter(x=>(!from||x.date>=from)&&(!to||x.date<=to)&&(type==='all'||type===x.type));document.getElementById('historyRows').innerHTML=a.length?a.map(x=>`<tr><td>${x.date}</td><td>${x.type==='sale'?'🧾 Sale':'🧺 Expense'}<br>${esc(x.desc)}</td><td>${money(x.amount)}</td><td class="no-print"><button class="btn pink small" onclick="deleteHistory('${x.type}','${x.id}')">Delete</button></td></tr>`).join(''):'<tr><td colspan="4" style="text-align:center;padding:25px;color:#8aa">No records found</td></tr>'}
+function deleteHistory(t,id){if(!confirm('Delete this record?'))return;if(t==='sale')db.sales=db.sales.filter(x=>x.id!==id);else db.expenses=db.expenses.filter(x=>x.id!==id);save()}
+function renderReports(){let s=sum(db.sales,'total'),e=sum(db.expenses,'amount');document.getElementById('rSales').textContent=money(s);document.getElementById('rExpense').textContent=money(e);document.getElementById('rProfit').textContent=money(s-e);document.getElementById('rOrders').textContent=db.sales.length;let days=last7();document.getElementById('dailyRows').innerHTML=days.map(d=>{let a=sum(salesOn(d),'total'),b=sum(expensesOn(d),'amount');return `<tr><td>${d}</td><td>${money(a)}</td><td>${money(b)}</td><td>${money(a-b)}</td></tr>`}).join('')}
+function last7(){let a=[];for(let i=6;i>=0;i--){let d=new Date();d.setDate(d.getDate()-i);a.push(d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'))}return a}
+function renderDashboard(){let d=today(),s=sum(salesOn(d),'total'),e=sum(expensesOn(d),'amount');document.getElementById('dateLabel').textContent=new Date().toLocaleDateString('en-MY',{weekday:'long',year:'numeric',month:'long',day:'numeric'});document.getElementById('dSales').textContent=money(s);document.getElementById('dExpense').textContent=money(e);document.getElementById('dProfit').textContent=money(s-e);document.getElementById('dOrders').textContent=salesOn(d).length;document.getElementById('sRevenue').textContent=money(s);document.getElementById('sExpense').textContent=money(e);document.getElementById('sProfit').textContent=money(s-e);let days=last7(),vals=days.map(k=>sum(salesOn(k),'total')-sum(expensesOn(k),'amount')),max=Math.max(1,...vals.map(Math.abs));document.getElementById('profitBars').innerHTML=days.map((k,i)=>`<div class="barcol"><div class="bar ${vals[i]<0?'negative':''}" style="height:${Math.max(3,Math.abs(vals[i])/max*125)}px"></div><div class="barlabel">${k.slice(5)}</div></div>`).join('')}
+function renderPriceEditor(){document.getElementById('priceEditor').innerHTML=db.products.map(p=>`<div class="rowline"><span>${esc(p.name)}</span><input style="width:100px;border:1px solid var(--line);border-radius:10px;padding:8px" type="number" min="0" step=".01" value="${p.price}" onchange="changePrice('${p.id}',this.value)"></div>`).join('')}
+function changePrice(id,v){let p=db.products.find(x=>x.id===id);if(!p||Number(v)<0)return;p.price=Number(v);save();renderProducts();renderPriceEditor();toast('Price updated')}
+function backupData(){let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(db,null,2)],{type:'application/json'}));a.download='GOH-YEAN-HUAN-POS-backup-'+today()+'.json';a.click();URL.revokeObjectURL(a.href)}
+function restoreData(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let x=JSON.parse(r.result);if(!Array.isArray(x.sales)||!Array.isArray(x.expenses))throw Error();if(confirm('Replace current data with this backup?')){db={...x,products:Array.isArray(x.products)?x.products:DEFAULT_PRODUCTS};save();toast('Backup restored')}}catch(err){toast('Invalid backup file')}};r.readAsText(f);e.target.value=''}
+function exportCSV(){let rows=[['Date','Type','Description','Amount'],...allHistory().map(x=>[x.date,x.type,x.desc,x.amount])];let csv=rows.map(r=>r.map(v=>'"'+String(v??'').replaceAll('"','""')+'"').join(',')).join('\n');let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='GOH-POS-history.csv';a.click();URL.revokeObjectURL(a.href)}
+function refresh(){renderDashboard();renderProducts();renderCart();renderExpenses();renderHistory();renderReports();renderPriceEditor()}
+refresh();
+</script></body></html>
